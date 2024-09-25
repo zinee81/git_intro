@@ -3,7 +3,6 @@ import { SUCCESS, LOADING, ERROR } from "./const";
 import "./App.css";
 import Search from "./component/Search";
 import Repos from "./component/Repos";
-import { useState } from "react";
 
 function App() {
   const initState = {
@@ -16,6 +15,8 @@ function App() {
     repos: null,
   };
 
+  const [state, dispatch] = useReducer(reducer, initState);
+  
   async function getUser(userId = "zinee81") {
     dispatch({ type: LOADING });
     try {
@@ -26,6 +27,18 @@ function App() {
           "User-Agent": "zinee",
         },
       });
+
+      if (!user_response.ok) {
+        // 404 오류 처리
+        if (user_response.status === 404) {
+          dispatch({ type: ERROR, error: "사용자가 없습니다." });
+        } else {
+          const errorData = await user_response.json();
+          dispatch({ type: ERROR, error: errorData.message });
+        }
+        return; // 더 이상 진행하지 않도록 리턴
+      }
+
       const user = await user_response.json();
 
       const repos_response = await fetch(`https://api.github.com/users/${userId}/repos?sort=created`, {
@@ -34,14 +47,13 @@ function App() {
           "User-Agent": "zinee",
         },
       });
+
       const repos = await repos_response.json();
       dispatch({ type: SUCCESS, user: user, repos: repos });
     } catch (e) {
       dispatch({ type: ERROR, error: e.message });
     }
   }
-
-  const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => {
     getUser();
@@ -67,12 +79,12 @@ function App() {
   return (
     <div className="container">
       <Search getUser={getUser} />
-      <h2>zinee's Git Hub</h2>
+      <h2>{state.user?.name} Git Hub</h2>
       {/* 현재 상태가 로딩중일 때 */}
       {state.loading && <p className="loading">로딩중...</p>}
       {/* 에러가 존재할 때 */}
       {state.error && <p className="error">{state.error}</p>}
-      {!state.loading && !state.error && state.user && (
+      {!state.loading && !state.error && state.user && state.repos && (
         <>
           <div className="user">
             <img src={state.user.avatar_url} alt="" className="user_img" />
