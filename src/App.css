@@ -1,0 +1,87 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  background-color: #e9ecef;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+h2 {
+  color: #343a40;
+  /* padding: 20px; */
+}
+
+.user {
+  display: flex;
+}
+
+.user_txt {
+  padding-top: 20px;
+  /* align-content: center; */
+}
+
+.user_img {
+  border-radius: 50%;
+  margin: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  color: #495057;
+  margin: 10px 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+}
+
+li {
+  /* display: inline-block; */
+  background-color: #4c94b1;
+  color: white;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+li a {
+  color: white;
+  text-decoration: none;
+}
+
+li a:hover {
+  color: #a9c4cf;
+  text-decoration: none;
+}
+
+li:hover {
+  background-color: #2f6f88; /* 호버 시 색상 변화 */
+}
+
+.loading,
+.error {
+  font-size: 16px;
+  color: #dc3545;
+}
+
+.search {
+  text-align: right;
+}
+
+.search button {
+  font-size: 12px;
+  padding: 5px 10px;
+  margin: 5px;
+}
