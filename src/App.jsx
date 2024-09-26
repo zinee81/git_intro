@@ -16,7 +16,7 @@ function App() {
   };
 
   const [state, dispatch] = useReducer(reducer, initState);
-  
+
   async function getUser(userId = "zinee81") {
     dispatch({ type: LOADING });
     try {
